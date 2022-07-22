@@ -157,35 +157,119 @@ document.getElementById("b5-handle2").onclick = function () {
   let b5Day = +document.getElementById("b5Day").value;
   let b5Month = +document.getElementById("b5Month").value;
   let b5Year = +document.getElementById("b5Year").value;
-
+  let b5Result = document.getElementById("result");
   let nextDay = b5Day;
   let nextMonth = b5Month;
   let nextYear = b5Year;
 
-  
-
-  if (b5Month !== 12) {
-    if (b5Day === 31) {
-      nextDay = 1;
-      nextMonth = 1;
-      nextYear = b5Year + 1;
-      console.log(nextDay + "/" + nextMonth + "/" + nextYear);
+  function dayInMonth(paramMonth, paramYear) {
+    switch (paramMonth) {
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12: {
+        return 31;
+      }
+      case 2: {
+        return 28;
+      }
+      case 4:
+      case 6:
+      case 9:
+      case 11: {
+        return 30;
+      }
     }
-    nextDay = b5Day + 1;
-    nextMonth;
-    console.log(nextDay + "/" + nextMonth + "/" + nextYear);
-  } 
-  else if(b5Month === 12 && b5Day > 0 || b5Day < 31) {
-    nextDay = 1;
-    nextMonth = b5Month + 1;
-    console.log(nextDay + "/" + nextMonth + "/" + nextYear);
   }
+
+  if (
+    b5Year > 0 &&
+    b5Month > 0 &&
+    b5Month < 13 &&
+    b5Day > 0 &&
+    b5Day <= dayInMonth(b5Month, b5Year)
+  ) {
+    nextDay = b5Day + 1;
+    if (b5Month != 12 && b5Day == dayInMonth(b5Month, b5Year)) {
+      nextDay = 1;
+      nextMonth = b5Month + 1;
+    } else if (b5Month == 12 && b5Day == dayInMonth(b5Month, b5Year)) {
+      nextDay = 1;
+      nextYear = b5Year + 1;
+      nextMonth = 1;
+    }
+  }
+  console.log(nextDay, nextMonth, nextYear);
+  b5Result.innerHTML = (nextDay + "/" + nextMonth + "/" + nextYear)
+};
+
+document.getElementById("b5-handle").onclick = function () {
+  let b5Day = +document.getElementById("b5Day").value;
+  let b5Month = +document.getElementById("b5Month").value;
+  let b5Year = +document.getElementById("b5Year").value;
+  let b5Result = document.getElementById("result");
 
   let preDay = b5Day - 1;
   let preMonth = b5Month;
   let preYear = b5Year;
 
-}
+  function dayInMonth(paramMonth, paramYear) {
+    switch (paramMonth) {
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+      case 8:
+      case 10:
+      case 12: {
+        return 31;
+      }
+      case 2: {
+        return 28;
+      }
+      case 4:
+      case 6:
+      case 9:
+      case 11: {
+        return 30;
+      }
+    }
+  }
+
+  if (
+    b5Year > 0 &&
+    b5Month > 0 &&
+    b5Month < 13 &&
+    b5Day > 0 &&
+    b5Day <= dayInMonth(b5Month, b5Year)
+  ) {
+    preDay=b5Day-1;
+    if(b5Month!=1&&b5Day==1)
+    {
+      if(b5Month == 2 || b5Month == 4 || b5Month == 6 || b5Month == 8 || b5Month == 9 || b5Month == 11){
+        preDay = 31;
+        preMonth = b5Month -1;
+      }
+      if(b5Month == 3){
+        preDay = 28;
+      }
+      if(b5Month == 5 || b5Month == 7 || b5Month == 10 || b5Month == 12){
+        preDay = 30;
+        preMonth = b5Month - 1;
+      }
+    }
+    else if(b5Month==1&&b5Day==1)
+    {
+      preDay=31;
+      preYear=b5Year - 1;
+      preMonth=12;
+    }
+  }
+  b5Result.innerHTML = (preDay + "/" + preMonth + "/" + preYear)
+};
 
 // ============================================================================
 // Bài 6
@@ -201,10 +285,19 @@ document.getElementById("b6-handle").onclick = function () {
   let b6Year = +document.getElementById("b6Year").value;
   let b6Result = document.getElementById("result");
   switch (b6Month) {
-    case 1:case 3:case 5:case 7:case 8:case 10:case 12:
+    case 1:
+    case 3:
+    case 5:
+    case 7:
+    case 8:
+    case 10:
+    case 12:
       b6Result.innerHTML = "31 ngày";
       break;
-    case 4:case 6:case 9:case 11:
+    case 4:
+    case 6:
+    case 9:
+    case 11:
       b6Result.innerHTML = "30 ngày";
       break;
     case 2:
@@ -215,7 +308,7 @@ document.getElementById("b6-handle").onclick = function () {
     default:
       break;
   }
-}
+};
 
 // ============================================================================
 // Bài 7
@@ -231,46 +324,100 @@ document.getElementById("b7-handle").onclick = function () {
   let b7NumberInput = +document.getElementById("b7Number").value;
   let b7Result = document.getElementById("result");
   let unitNumberInput = b7NumberInput % 10;
-  let dozensNumberInput = Math.floor(b7NumberInput/10 % 10);
+  let dozensNumberInput = Math.floor((b7NumberInput / 10) % 10);
   let hundredsNumberInput = Math.floor(b7NumberInput / 100);
-  
+
   switch (hundredsNumberInput) {
-    case 1: b7Result.innerHTML += "Một trăm ";break;
-    case 2: b7Result.innerHTML += "Hai trăm ";break;
-    case 3: b7Result.innerHTML += "Ba trăm ";break;
-    case 4: b7Result.innerHTML += "Bốn trăm ";break;
-    case 5: b7Result.innerHTML += "Năm trăm ";break;
-    case 6: b7Result.innerHTML += "Sáu trăm ";break;
-    case 7: b7Result.innerHTML += "Bảy trăm ";break;
-    case 8: b7Result.innerHTML += "Tám trăm ";break;
-    case 9: b7Result.innerHTML += "Chín trăm ";break;
+    case 1:
+      b7Result.innerHTML += "Một trăm ";
+      break;
+    case 2:
+      b7Result.innerHTML += "Hai trăm ";
+      break;
+    case 3:
+      b7Result.innerHTML += "Ba trăm ";
+      break;
+    case 4:
+      b7Result.innerHTML += "Bốn trăm ";
+      break;
+    case 5:
+      b7Result.innerHTML += "Năm trăm ";
+      break;
+    case 6:
+      b7Result.innerHTML += "Sáu trăm ";
+      break;
+    case 7:
+      b7Result.innerHTML += "Bảy trăm ";
+      break;
+    case 8:
+      b7Result.innerHTML += "Tám trăm ";
+      break;
+    case 9:
+      b7Result.innerHTML += "Chín trăm ";
+      break;
   }
 
   if (dozensNumberInput % 10 === 0 && unitNumberInput !== 0) {
-    b7Result.innerHTML += "lẻ"
+    b7Result.innerHTML += "lẻ";
   }
 
   switch (dozensNumberInput) {
-    case 1: b7Result.innerHTML += "Mười ";break;
-    case 2: b7Result.innerHTML += "Hai mươi ";break;
-    case 3: b7Result.innerHTML += "Ba mươi ";break;
-    case 4: b7Result.innerHTML += "Bốn mươi ";break;
-    case 5: b7Result.innerHTML += "Năm mươi ";break;
-    case 6: b7Result.innerHTML += "sáu mươi ";break;
-    case 7: b7Result.innerHTML += "Bảy mươi ";break;
-    case 8: b7Result.innerHTML += "Tám mươi ";break;
-    case 9: b7Result.innerHTML += "Chín mươi ";break;
+    case 1:
+      b7Result.innerHTML += "Mười ";
+      break;
+    case 2:
+      b7Result.innerHTML += "Hai mươi ";
+      break;
+    case 3:
+      b7Result.innerHTML += "Ba mươi ";
+      break;
+    case 4:
+      b7Result.innerHTML += "Bốn mươi ";
+      break;
+    case 5:
+      b7Result.innerHTML += "Năm mươi ";
+      break;
+    case 6:
+      b7Result.innerHTML += "sáu mươi ";
+      break;
+    case 7:
+      b7Result.innerHTML += "Bảy mươi ";
+      break;
+    case 8:
+      b7Result.innerHTML += "Tám mươi ";
+      break;
+    case 9:
+      b7Result.innerHTML += "Chín mươi ";
+      break;
   }
 
   switch (unitNumberInput) {
-    case 1: b7Result.innerHTML += "Một ";break;
-    case 2: b7Result.innerHTML += "Hai ";break;
-    case 3: b7Result.innerHTML += "Ba ";break;
-    case 4: b7Result.innerHTML += "Bốn ";break;
-    case 5: b7Result.innerHTML += "Năm ";break;
-    case 6: b7Result.innerHTML += "Sáu ";break;
-    case 7: b7Result.innerHTML += "Bảy ";break;
-    case 8: b7Result.innerHTML += "Tám ";break;
-    case 9: b7Result.innerHTML += "Chín ";break;
+    case 1:
+      b7Result.innerHTML += "Một ";
+      break;
+    case 2:
+      b7Result.innerHTML += "Hai ";
+      break;
+    case 3:
+      b7Result.innerHTML += "Ba ";
+      break;
+    case 4:
+      b7Result.innerHTML += "Bốn ";
+      break;
+    case 5:
+      b7Result.innerHTML += "Năm ";
+      break;
+    case 6:
+      b7Result.innerHTML += "Sáu ";
+      break;
+    case 7:
+      b7Result.innerHTML += "Bảy ";
+      break;
+    case 8:
+      b7Result.innerHTML += "Tám ";
+      break;
+    case 9:
+      b7Result.innerHTML += "Chín ";
+      break;
   }
-}
+};
